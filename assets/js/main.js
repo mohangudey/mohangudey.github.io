@@ -1,6 +1,6 @@
 /**
-* Template Name: TheEvent - v4.8.0
-* Template URL: https://bootstrapmade.com/theevent-conference-event-bootstrap-template/
+* Template Name: Green - v4.8.0
+* Template URL: https://bootstrapmade.com/green-free-one-page-bootstrap-template/
 * Author: BootstrapMade.com
 * License: https://bootstrapmade.com/license/
 */
@@ -68,7 +68,7 @@
     let offset = header.offsetHeight
 
     if (!header.classList.contains('header-scrolled')) {
-      offset -= 20
+      offset -= 16
     }
 
     let elementPos = select(el).offsetTop
@@ -79,19 +79,23 @@
   }
 
   /**
-   * Toggle .header-scrolled class to #header when page is scrolled
+   * Header fixed top on scroll
    */
   let selectHeader = select('#header')
   if (selectHeader) {
-    const headerScrolled = () => {
-      if (window.scrollY > 100) {
-        selectHeader.classList.add('header-scrolled')
+    let headerOffset = selectHeader.offsetTop
+    let nextElement = selectHeader.nextElementSibling
+    const headerFixed = () => {
+      if ((headerOffset - window.scrollY) <= 0) {
+        selectHeader.classList.add('fixed-top')
+        nextElement.classList.add('scrolled-offset')
       } else {
-        selectHeader.classList.remove('header-scrolled')
+        selectHeader.classList.remove('fixed-top')
+        nextElement.classList.remove('scrolled-offset')
       }
     }
-    window.addEventListener('load', headerScrolled)
-    onscroll(document, headerScrolled)
+    window.addEventListener('load', headerFixed)
+    onscroll(document, headerFixed)
   }
 
   /**
@@ -159,19 +163,23 @@
   });
 
   /**
-   * Initiate glightbox
+   * Hero carousel indicators
    */
-  const glightbox = GLightbox({
-    selector: '.glightbox'
+  let heroCarouselIndicators = select("#hero-carousel-indicators")
+  let heroCarouselItems = select('#heroCarousel .carousel-item', true)
+
+  heroCarouselItems.forEach((item, index) => {
+    (index === 0) ?
+    heroCarouselIndicators.innerHTML += "<li data-bs-target='#heroCarousel' data-bs-slide-to='" + index + "' class='active'></li>":
+      heroCarouselIndicators.innerHTML += "<li data-bs-target='#heroCarousel' data-bs-slide-to='" + index + "'></li>"
   });
 
   /**
-   * Gallery Slider
+   * Clients Slider
    */
-  new Swiper('.gallery-slider', {
+  new Swiper('.clients-slider', {
     speed: 400,
     loop: true,
-    centeredSlides: true,
     autoplay: {
       delay: 5000,
       disableOnInteraction: false
@@ -184,48 +192,74 @@
     },
     breakpoints: {
       320: {
-        slidesPerView: 1,
-        spaceBetween: 20
-      },
-      575: {
         slidesPerView: 2,
-        spaceBetween: 20
+        spaceBetween: 40
       },
-      768: {
+      480: {
         slidesPerView: 3,
-        spaceBetween: 20
+        spaceBetween: 60
+      },
+      640: {
+        slidesPerView: 4,
+        spaceBetween: 80
       },
       992: {
-        slidesPerView: 5,
-        spaceBetween: 20
+        slidesPerView: 6,
+        spaceBetween: 120
       }
     }
   });
 
   /**
-   * Initiate gallery lightbox 
+   * Porfolio isotope and filter
    */
-  const galleryLightbox = GLightbox({
-    selector: '.gallery-lightbox'
+  window.addEventListener('load', () => {
+    let portfolioContainer = select('.portfolio-container');
+    if (portfolioContainer) {
+      let portfolioIsotope = new Isotope(portfolioContainer, {
+        itemSelector: '.portfolio-item'
+      });
+
+      let portfolioFilters = select('#portfolio-flters li', true);
+
+      on('click', '#portfolio-flters li', function(e) {
+        e.preventDefault();
+        portfolioFilters.forEach(function(el) {
+          el.classList.remove('filter-active');
+        });
+        this.classList.add('filter-active');
+
+        portfolioIsotope.arrange({
+          filter: this.getAttribute('data-filter')
+        });
+
+      }, true);
+    }
+
   });
 
   /**
-   * Buy tickets select the ticket type on click
+   * Initiate portfolio lightbox 
    */
-  on('show.bs.modal', '#buy-ticket-modal', function(event) {
-    select('#buy-ticket-modal #ticket-type').value = event.relatedTarget.getAttribute('data-ticket-type')
-  })
+  const portfolioLightbox = GLightbox({
+    selector: '.portfolio-lightbox'
+  });
 
   /**
-   * Animation on scroll
+   * Portfolio details slider
    */
-  window.addEventListener('load', () => {
-    AOS.init({
-      duration: 1000,
-      easing: 'ease-in-out',
-      once: true,
-      mirror: false
-    })
+  new Swiper('.portfolio-details-slider', {
+    speed: 400,
+    loop: true,
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: false
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      type: 'bullets',
+      clickable: true
+    }
   });
 
 })()
