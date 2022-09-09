@@ -443,6 +443,7 @@
           <input type="radio" name="q1" value="D">
           <label class="form-check-label">Chena </label>
         </div>
+        <p id="answer1"></p>
       </div>
 
       <div class="my-5">
@@ -463,6 +464,7 @@
           <input type="radio" name="q2" value="D">
           <label class="form-check-label">Assam </label>
         </div>
+        <p id="answer2"></p>
       </div>
       
       <div class="my-5">
@@ -483,6 +485,7 @@
           <input type="radio" name="q3" value="D">
           <label class="form-check-label">110-150 cms</label>
         </div>
+        <p id="answer3"></p>
       </div>
 
       <div class="my-5">
@@ -503,6 +506,7 @@
           <input type="radio" name="q4" value="D">
           <label class="form-check-label">Indian Millets Protection</label>
         </div>
+        <p id="answer4"></p>
       </div>
 
       <div class="my-5">
@@ -523,6 +527,7 @@
           <input type="radio" name="q5" value="D">
           <label class="form-check-label">Madhya Pradesh</label>
         </div>
+        <p id="answer5"></p>
       </div>
 
       <div class="text-center">
@@ -921,7 +926,9 @@
         }
       });
     
-      window.scrollTo(0, 2700);
+      var x = window.pageYOffset;
+
+      window.scrollTo(0,2700); //2700
       let i = 0;
       const index = setInterval(() => {
         i++;
@@ -930,6 +937,23 @@
       }, 20);
     
       result.classList.remove("d-none");
+
+      const answer1 = document.querySelector("#answer1");
+      answer1.innerHTML = "Answer : B";
+
+      const answer2 = document.querySelector("#answer2");
+      answer2.innerHTML = "Answer : C";
+
+      const answer3 = document.querySelector("#answer3");
+      answer3.innerHTML = "Answer : A";
+
+      const answer4 = document.querySelector("#answer4");
+      answer4.innerHTML = "Answer : B";
+
+      const answer5 = document.querySelector("#answer5");
+      answer5.innerHTML = "Answer : D";
+
+
     });
     
     
@@ -937,9 +961,8 @@
     //    document.getElementById('aboutresult').style.display = "block";
     // }
     
-      </script>
+  </script>
 
 
 </body>
-
 </html>
